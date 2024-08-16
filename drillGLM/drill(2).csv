@@ -1,0 +1,17 @@
+X1,X2,X3,X4,y
+Low,Low,Low,Low,1.68
+High,Low,Low,Low,1.98
+Low,High,Low,Low,3.28
+High,High,Low,Low,3.44
+Low,Low,High,Low,4.98
+High,Low,High,Low,5.7
+Low,High,High,Low,9.97
+High,High,High,Low,9.07
+Low,Low,Low,High,2.07
+High,Low,Low,High,2.44
+Low,High,Low,High,4.09
+High,High,Low,High,4.53
+Low,Low,High,High,7.77
+High,Low,High,High,9.43
+Low,High,High,High,11.75
+High,High,High,High,16.3
