@@ -1,0 +1,92 @@
+---
+title: "Multivariate Statistics and Machine Learning"
+author: 
+- Yasin Gija
+date: "2023-11-26"
+output: pdf_document
+---
+\newpage
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## The Dataset
+
+The "Old Faithful" geyser dataset holds data of eruptions from the "Old Faithful" geyser that occurred between 1st August 1985 and 15th August 1985 at Yellowstone National Park in Wyoming [2]. This selection of data comes from Azzalini and Bowman. The data has 299 observations and 2 variable [5], which are
+
+
+* Duration
+    + The time that a geyser eruption lasts for, in mins
+*  Waiting
+    + The time interval between successive geyser eruptions that occur, in mins.
+
+These measurements were taken at night and originally were observed as short, medium and long. These have now been converted to the values 2,3 and 4 minutes.  
+
+This data can be accessed from the "MASS" package. "MASS" refers to a variety of functions and datasets which assist with the book publication "Modern Applied Statistics in S" [3].
+
+
+## Methods
+
+To analyse the "Old Faithful" geyser data we are going to use Gaussian mixture models, or GMMs. A mixture model represents and displays sub-populations from a population without the need of identifying which sub-population an individual belongs to [6]. As the sub-population of each individual is not known, this is a method of unsupervised learning [1]. To this Gaussian distributions are then applied.  
+
+To implement a Gaussian mixture model, we shall use the "Mclust" package, which is used for model-based clustering and classification [7]. If required, we first standardise the data to prevent skewed results and so that the variables are of a similar scaling. The Mclust package will then find the optimal cluster fit for the data before displaying which covariance is suitable, which will be based upon the maximisation of the BIC. A graph of the clustered data will then be displayed.
+
+## Results and Discussion
+
+### Loading the data
+
+Firstly we load the geyser data which we obtain from the package "MASS". We also load the "Mclust" package for GMM analysis.
+```{r load}
+
+library("MASS")
+data(geyser)
+```
+
+### Applying the Mclust package
+
+The Mclust package is used to apply a Gaussian mixture model. However, we do not specify the value of G, the clusters to apply to the geyser data. By doing this, the program automatically computes the best value for G from G=1 to G=9 based upon the BIC.
+When we output "gmm" to the console, the console displays that the optimal "Mclust" model is that which uses "VVI" covariance with four clusters. This model would have a BIC of -2768.568.
+```{r gmmMclust, message=FALSE,warning=FALSE}
+
+library("mclust")
+gmm=Mclust(geyser,verbose=FALSE)
+gmm
+summary(gmm)
+mclustModelNames("VVI")
+```
+
+### The BIC plot
+
+We can see clearly below, from the plot of BIC against the number of components, that the two models which use EII and VII have a much worse performance than the rest of the models. The other 12 models have similar performance, but we can see a slight peak at Number of components = 4, where the BIC is maximal, showing that 4 clusters is optimal for this model.
+
+```{r BICplot, echo=TRUE, fig.align='center',out.width='75%'}
+plot(gmm,what='BIC')
+
+```
+
+### Classification plot
+
+We also plot a model of duration against waiting time and we can see the 4 clusters illustrated on the figure.
+We can see that the GMM is accurate in its classifying to data to clusters in comparison to K-means as well as in identifying the optimal number of clusters. However, Gaussian mixture models are computer intensive and can be slow for large amounts of data or when there are many clusters [4].
+
+```{r plotting, echo=TRUE,fig.align='center',out.width='75%'}
+plot(gmm, what = "classification")
+
+```
+
+## References
+
+1. Strimmer Korbinian, Multivariate Statistics and Machine Learning, url: https://learn-eu-central-1-prod-fleet01-xythos.content.blackboardcdn.com/5f0eeec577cec/45196445?X-Blackboard-S3-Bucket=learn-eu-central-1-prod-fleet01-xythos, Accessed:27/11/2023  
+
+2. rdrr.io, 2023, url: https://rdrr.io/cran/MASS/man/geyser.html, Accessed: 27/11/2023  
+
+3. Ripley Brian, 2003, url: https://www.stats.ox.ac.uk/pub/MASS4/, Accessed: 27/11/2023  
+
+4. Boehmke Bradley, 2020, url: https://bradleyboehmke.github.io/HOML/model-clustering.html, Accessed: 27/11/2023  
+
+5. A.Azzalini,A.W.Bowman,1990, A Look at Some Data on the Old Faithful Geyser, Accessed: 27/11/2023
+
+6. Brilliant, The Model, url: https://brilliant.org/wiki/gaussian-mixture-model/, Accessed: 27/11/2023
+
+7. CRAN projects, url: https://cran.r-project.org/web/packages/mclust/vignettes/mclust.html, Accessed: 27/11/2023
