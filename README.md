@@ -1,1 +1,2 @@
-R work
+A variety of R work undertaken:
+
