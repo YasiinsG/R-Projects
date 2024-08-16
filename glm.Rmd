@@ -10,13 +10,13 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Question (a)
+# First Part
 
 We will use a generalised linear model with the response Y which represents the advance rate of the drill. The response will follow a Gamma distribution $$Y_i \sim Gamma(\mu_i,\phi)$$ The linear predictor is $$\eta=\beta_0 +\beta_1X_1+\beta_2X_2+\beta_3X_3+\beta_4X_4$$ where $\beta_0$ is the intercept and $\beta_1,\beta_2,\beta_3,\beta_4$ are the coefficients for $X_1,X_2,X_3,X_4$ respectively.
 
 The canonical link function for the above Gamma distribution for the response is $$g(\mu)=-1/\mu$$
 
-# Question (b)
+# Second Part
 
 ```{r pressure, echo=TRUE}
 # First, read in the data to be used for the model
@@ -37,7 +37,7 @@ summary(fitted_model)
 
 The signs of the parameter estimates $X_1,X_2,X_3,X_4$ are all negative, as shown in the 'Estimate' column. Having negative estimates is necessary as the R link corresponds to multiplying the coefficients $\beta_i$ by $-1$, giving us positive values. We need postive values as the Gamma distribution is only defined for positive values.
 
-# Question (c)
+# Third Part
 
 ```{r qu_c, echo=TRUE}
 # Fit our second glm
@@ -49,7 +49,7 @@ summary(fitted_model_2)
 
 For this fitted model, we can see that the signs of the parameter estimates are all positive unlike our model from part (b). This means that we do not have negative $\eta$ values and so the expectation is not negative also.
 
-# Question (d)
+# Fourth Part
 
 We can see that the model in part (c) has lower p values than in model (b). Smaller p values show us that the regression coefficient is non-zero and that the predictors with small p-values need to be included in the model.
 
@@ -57,7 +57,7 @@ Another observation we can make is that the residual deviance is 0.50836 on 11 d
 
 One last aspect we can observe is that the AIC in the model in part (b) is 53.432 but in the model in part (c) it is 28.17, which is lower. A lower AIC score indicates that the model is a better fit.
 
-# Question (e)
+# Fifth Part
 
 Two alternative ways we can use for testing the significance of a parameter are the Wald test and the Profile likelihood interval.
 
@@ -89,11 +89,11 @@ confint(fitted_model)
 
 The confidence interval we get for $X_1$ is (-0.0453341,0.01124852). $c=0$ lies within this confidence interval so $H_0$ is not rejected.
 
-# Question (f)
+# Sixth Part
 
 The two confidence intervals are very similar in size, with the profile likelihood CI being slightly larger than the Wald CI. However, the profile likelihood CI is better as it can capture the asymmetry in the likelihood function and so it is symmetric around the MLE. On the other hand, even though Wald is simpler, Wald cannot capture the asymmetry as good as the profile likelihood does.
 
-# Question (g)
+# Seventh Part
 
 ```{r qu_g, echo=TRUE}
 # Fit our extended glm which includes two-factor interactions.
